@@ -27,18 +27,4 @@ public class HomeController {
 	public String hello() {
 		return "hello admin";
 	}
-
-	@RequestMapping("/a/abel")
-	public String aabel() {
-		return "a aabel";
-	}
-	@RequestMapping("/a/abel2")
-	public String aabel2() {
-		return "a aabel";
-	}
-	@RequestMapping("/a/b/abel")
-	public String abel3() {
-		return "a b ababel";
-	}
-
 }
