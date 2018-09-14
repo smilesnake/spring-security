@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smilesnake.domain.mapper.PermissionMapper">
+	<resultMap id="BaseResultMap"
+		type="com.smilesnake.domain.model.Permission">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+		<result column="url" jdbcType="VARCHAR" property="url" />
+		<result column="pid" jdbcType="BIGINT" property="pid" />
+		<result column="method" jdbcType="VARCHAR" property="method" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, description, url, pid,method
+	</sql>
+
+	<select id="findAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_permission
+	</select>
+	<select id="findByAdminUserId" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+ 		select p.* from Sys_User u
+        LEFT JOIN sys_role_user sru on u.id= sru.Sys_User_id
+        LEFT JOIN Sys_Role r on sru.Sys_Role_id=r.id
+        LEFT JOIN Sys_permission_role spr on spr.role_id=r.id
+        LEFT JOIN Sys_permission p on p.id =spr.permission_id
+        where u.id=#{userId}
+	</select>
+
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_permission
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		sys_permission
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert"
+		parameterType="com.smilesnake.domain.model.Permission">
+		insert into sys_permission (id, name, description,
+		url,
+		pid,method)
+		values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+		#{description,jdbcType=VARCHAR},
+		#{url,jdbcType=VARCHAR},
+		#{pid,jdbcType=BIGINT}),#{method,jdbcType=VARCHAR}
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.smilesnake.domain.model.Permission">
+		insert into sys_permission
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="url != null">
+				url,
+			</if>
+			<if test="pid != null">
+				pid,
+			</if>
+			<if test="method != null">
+				method,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="pid != null">
+				#{pid,jdbcType=BIGINT},
+			</if>
+			<if test="method != null">
+				#{method,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.smilesnake.domain.model.Permission">
+		update sys_permission
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="pid != null">
+				pid = #{pid,jdbcType=BIGINT},
+			</if>
+			<if test="method != null">
+				method = #{method,jdbcType=BIGINT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.smilesnake.domain.model.Permission">
+		update sys_permission
+		set name =
+		#{name,jdbcType=VARCHAR},
+		description =
+		#{description,jdbcType=VARCHAR},
+		url = #{url,jdbcType=VARCHAR},
+		pid = #{pid,jdbcType=BIGINT}
+		method = #{method,jdbcType=VARCHAR},
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>
