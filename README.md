@@ -6,7 +6,11 @@
 目录说明：
 
 resources:
-  mapper      mybatis的xml文件所存放的位置
-  static      存放静态文件的位置
-    css       存放css文件的位置
-   templates  存放的是html文件
+
+  /mapper      mybatis的xml文件所存放的位置
+  
+  /static      存放静态文件的位置
+  
+  /static/css       存放css文件的位置
+    
+  /templates  存放的是html文件
