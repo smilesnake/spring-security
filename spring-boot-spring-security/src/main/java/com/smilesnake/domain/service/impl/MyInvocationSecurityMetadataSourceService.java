@@ -39,8 +39,8 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
 		Collection<ConfigAttribute> array;
 		ConfigAttribute cfg;
 		List<Permission> permissions = permissionDao.findAll();
-		for (Permission permission : permissions) {
-			array = new ArrayList<>();
+		for (Permission permission : permissions) { 
+			array = new ArrayList<ConfigAttribute>();
 			cfg = new SecurityConfig(permission.getName());
 			array.add(cfg);
 			map.put(permission.getUrl(), array);
@@ -54,6 +54,7 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
 			loadResourceDefine();
 
 		HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
+		String url = ((FilterInvocation) object).getRequestUrl();
 		AntPathRequestMatcher matcher;
 		String resUrl;
 		for (Iterator<String> iter = map.keySet().iterator(); iter.hasNext();) {
